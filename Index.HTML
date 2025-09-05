@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>E.Donos — Marka | Zgłaszaj. Chroń. Naprawiaj.</title>
+  <meta name="description" content="E.Donos — platforma do bezpiecznego, anonimowego zgłaszania nieprawidłowości. Policyjna, ciemna stylistyka." />
+
+  <style>
+    :root{
+      --bg:#070b15;        /* głębokie tło */
+      --panel:#0f1526;     /* panel cards */
+      --border:#1b2236;    /* delikatne obramowania */
+      --accent:#2b64d6;    /* policyjny niebieski */
+      --accent-2:#4f46e5;  /* indigo */
+      --muted:#98a0b3;     /* tekst pomocniczy */
+      --white:#e6eefc;
+      --success:#34d399;
+      --glass: rgba(255,255,255,0.03);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    /* Reset */
+    *{box-sizing:border-box}
+    html,body,#app{height:100%}
+    body{
+      margin:0;
+      background:linear-gradient(180deg,var(--bg),#061026 140%);
+      color:var(--white);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.4;
+    }
+
+    /* Container */
+    .wrap{max-width:1100px;margin:0 auto;padding:28px;}
+
+    /* Header */
+    header{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border);backdrop-filter: blur(6px);}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{
+      width:48px;height:48px;border-radius:10px;
+      display:grid;place-items:center;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      box-shadow:0 6px 18px rgba(47,57,97,0.35);
+      flex-shrink:0;
+    }
+    .brand h1{margin:0;font-size:18px;letter-spacing:0.6px}
+    nav{display:flex;gap:18px;align-items:center}
+    nav a{color:var(--muted);text-decoration:none;font-size:14px}
+    nav a:hover{color:var(--white)}
+    .actions{display:flex;gap:10px;align-items:center}
+    .btn{padding:9px 14px;border-radius:999px;border:1px solid transparent;cursor:pointer;font-weight:600;background:transparent;color:var(--white)}
+    .btn.ghost{border-color:var(--border);color:var(--muted)}
+    .btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));box-shadow:0 6px 18px rgba(79,70,229,0.12)}
+    .btn.small{padding:6px 10px;font-size:14px}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1fr 480px;gap:32px;padding:44px 0;align-items:center}
+    .hero h2{font-size:36px;margin:0 0 14px}
+    .hero p{margin:0;color:var(--muted);max-width:56ch}
+    .cta-row{margin-top:18px;display:flex;gap:12px;flex-wrap:wrap}
+    .badge-row{margin-top:16px;display:flex;gap:14px;color:var(--muted);font-size:13px;align-items:center}
+
+    /* Mock panel */
+    .panel{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      border-radius:14px;padding:16px;border:1px solid var(--border);
+      box-shadow: 0 10px 30px rgba(2,6,23,0.6);
+    }
+    .panel .header{display:flex;justify-content:space-between;align-items:center;padding-bottom:8px;border-bottom:1px solid var(--border);font-size:13px;color:var(--muted)}
+    .grid-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding-top:12px}
+    .stat{background:var(--panel);padding:14px;border-radius:10px;border:1px solid var(--border)}
+    .stat h3{margin:0;color:var(--accent);font-size:26px}
+    .stat p{margin:6px 0 0;color:var(--muted);font-size:12px}
+
+    /* Features */
+    .features{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}
+    .feature{background:var(--panel);padding:18px;border-radius:10px;border:1px solid var(--border);min-height:120px}
+    .feature h4{margin:6px 0 0;font-size:16px}
+    .feature p{margin:8px 0 0;color:var(--muted);font-size:13px}
+
+    /* How it works */
+    .how{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+    .step{background:var(--panel);padding:16px;border-radius:10px;border:1px solid var(--border)}
+
+    /* CTA / newsletter */
+    .newsletter{margin-top:26px;text-align:center}
+    form.inline{display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:14px}
+    input[type="email"]{
+      padding:12px 14px;border-radius:10px;border:1px solid var(--border);background:var(--glass);color:var(--white);
+      min-width:260px;font-size:15px;outline:none;
+    }
+    input[type="email"]:focus{box-shadow:0 0 0 4px rgba(79,70,229,0.08);border-color:var(--accent-2)}
+
+    .msg{margin-top:12px;font-size:14px;color:var(--success)}
+
+    /* Footer */
+    footer{margin-top:42px;padding-top:18px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:13px;flex-wrap:wrap;gap:12px}
+
+    /* Responsiveness */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr;grid-auto-rows:auto}
+      .features{grid-template-columns:repeat(2,1fr)}
+      .how{grid-template-columns:repeat(1,1fr)}
+      .grid-stats{grid-template-columns:repeat(1,1fr)}
+    }
+    @media (max-width:560px){
+      .features{grid-template-columns:1fr}
+    }
+
+    /* Small helper */
+    .icon{
+      width:40px;height:40px;border-radius:8px;display:grid;place-items:center;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      border:1px solid var(--border);color:var(--accent);
+    }
+
+  </style>
+</head>
+<body>
+  <div id="app" class="wrap">
+
+    <!-- Header -->
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden>
+          <!-- Simple shield SVG -->
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden focusable="false" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2l7 3v5c0 5-3.9 9.7-7 11-3.1-1.3-7-6-7-11V5l7-3z" fill="white" opacity="0.95"/>
+            <path d="M10.5 12.5l1.9 1.9 4-4" stroke="rgba(0,0,0,0.6)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <h1>E.Donos</h1>
+          <div style="font-size:12px;color:var(--muted)">Marka — Zgłaszaj. Chroń. Naprawiaj.</div>
+        </div>
+      </div>
+
+      <nav aria-label="Główne menu">
+        <a href="#funkcje">Funkcje</a>
+        <a href="#jak">Jak to działa</a>
+        <a href="#kontakt">Kontakt</a>
+        <a href="#demo">Demo</a>
+      </nav>
+
+      <div class="actions">
+        <button class="btn ghost small" onclick="alert('Demo: logowanie tymczasowe')">Zaloguj</button>
+        <button class="btn primary small" onclick="document.getElementById('demo').scrollIntoView({behavior:'smooth'})">Rozpocznij</button>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div>
+        <h2 id="hero-title">Marka <span style="color:var(--accent);">E.Donos</span> — Policyjna, bezpieczna platforma zgłoszeń</h2>
+        <p>Platforma do bezpiecznego i anonimowego zgłaszania nieprawidłowości w organizacjach. Projektowana z myślą o zgodności, prywatności i czytelnym procesie obsługi spraw.</p>
+
+        <div class="cta-row">
+          <button class="btn primary" onclick="document.getElementById('demo').scrollIntoView({behavior:'smooth'})">Zobacz demo</button>
+          <button class="btn ghost" onclick="alert('Dokumentacja: w przygotowaniu')">Dokumentacja</button>
+        </div>
+
+        <div class="badge-row" aria-hidden>
+          <div style="display:flex;align-items:center;gap:8px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.2"/></svg> EU-hosted</div>
+          <div style="display:flex;align-items:center;gap:8px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/></svg> Szyfrowanie E2E</div>
+          <div style="display:flex;align-items:center;gap:8px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2l7 3v5c0 5-3.9 9.7-7 11-3.1-1.3-7-6-7-11V5l7-3z" stroke="currentColor" stroke-width="1.2"/></svg> Zgodność z dyrektywą</div>
+        </div>
+      </div>
+
+      <aside>
+        <div class="panel" role="region" aria-label="Podgląd panelu">
+          <div class="header">
+            <div>Panel — Marka E.Donos</div>
+            <div style="font-size:12px;color:var(--muted)">Widok demo</div>
+          </div>
+
+          <div class="grid-stats" style="margin-top:12px">
+            <div class="stat">
+              <h3>8</h3>
+              <p>Nowe zgłoszenia — dzisiaj</p>
+            </div>
+            <div class="stat">
+              <h3>2h 14m</h3>
+              <p>Średni czas reakcji (7 dni)</p>
+            </div>
+            <div class="stat">
+              <h3>97%</h3>
+              <p>Satysfakcja po zamknięciu</p>
+            </div>
+          </div>
+
+          <div style="margin-top:12px">
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <div class="icon" title="Anonimowość">A</div>
+              <div class="icon" title="Kategoryzacja">K</div>
+              <div class="icon" title="Bezpieczeństwo">S</div>
+              <div style="flex:1;min-width:120px;color:var(--muted);font-size:13px;padding-top:6px">Panel zarządzania zgłoszeniami — podgląd</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- Features -->
+    <section id="funkcje" style="margin-top:26px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end">
+        <div>
+          <h3 style="margin:0">Dlaczego <span style="color:var(--accent)">Marka E.Donos</span>?</h3>
+          <div style="color:var(--muted);margin-top:6px">Prosty i bezpieczny sposób na etyczne zgłaszanie i obsługę spraw.</div>
+        </div>
+      </div>
+
+      <div class="features" aria-hidden>
+        <div class="feature">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div class="icon">🔒</div>
+            <h4>Anonimowość</h4>
+          </div>
+          <p>Twoja tożsamość pozostaje bezpieczna dzięki pseudonimizacji i szyfrowaniu end-to-end.</p>
+        </div>
+
+        <div class="feature">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div class="icon">📊</div>
+            <h4>Przejrzysty obieg</h4>
+          </div>
+          <p>Statusy, priorytety i SLA w czytelnym panelu.</p>
+        </div>
+
+        <div class="feature">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div class="icon">⚖️</div>
+            <h4>Zgodność</h4>
+          </div>
+          <p>Projekt zgodny z dyrektywą o sygnalistach i dobrymi praktykami ochrony danych.</p>
+        </div>
+
+        <div class="feature">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div class="icon">📱</div>
+            <h4>Responsywność</h4>
+          </div>
+          <p>Płynne działanie na telefonach, tabletach i komputerach.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section id="jak" style="margin-top:26px">
+      <h3>Jak to działa?</h3>
+      <div class="how">
+        <div class="step">
+          <strong>1. Zgłoś</strong>
+          <p style="color:var(--muted);margin-top:8px">Wypełnij formularz — anonimowo albo z danymi. Możesz dołączyć pliki na backendzie.</p>
+        </div>
+        <div class="step">
+          <strong>2. Kategoryzacja</strong>
+          <p style="color:var(--muted);margin-top:8px">AI i reguły porządkują zgłoszenia i proponują priorytety.</p>
+        </div>
+        <div class="step">
+          <strong>3. Obsługa</strong>
+          <p style="color:var(--muted);margin-top:8px">Zespół prowadzi sprawę, z audytem i transparentnym logiem działań.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter / CTA -->
+    <section id="kontakt" class="newsletter">
+      <h3 style="margin:0">Chcesz dostęp do wczesnej wersji?</h3>
+      <p style="color:var(--muted);margin-top:6px">Zostaw e-mail — wyślemy zaproszenie do beta-testów.</p>
+
+      <form id="newsletter" class="inline" onsubmit="return subscribe(event)">
+        <input id="email" type="email" placeholder="Twój e-mail" required aria-label="E-mail" />
+        <button class="btn primary" type="submit">Zapisz mnie</button>
+      </form>
+      <div id="msg" class="msg" role="status" aria-live="polite" style="display:none">Dziękujemy! Sprawdź skrzynkę e-mail.</div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div>© <span id="year"></span> Marka E.Donos. Wszelkie prawa zastrzeżone.</div>
+      <div style="display:flex;gap:12px;align-items:center">
+        <a href="#" style="color:var(--muted);text-decoration:none">GitHub</a>
+        <a href="#" style="color:var(--muted);text-decoration:none">Polityka prywatności</a>
+        <a href="#" style="color:var(--muted);text-decoration:none">Regulamin</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    // Fill year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Simple newsletter handler - stores email locally and shows success message
+    function subscribe(e){
+      e.preventDefault();
+      const input = document.getElementById('email');
+      const email = (input.value || '').trim();
+      const msg = document.getElementById('msg');
+
+      // basic email regex (simple)
+      const re = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$/i;
+      if(!re.test(email)){
+        alert('Podaj poprawny adres e-mail.');
+        input.focus();
+        return false;
+      }
+
+      // store to localStorage (placeholder for backend)
+      const list = JSON.parse(localStorage.getItem('e-donos-subs') || '[]');
+      if(list.includes(email)){
+        msg.textContent = 'Ten e-mail jest już zapisany.';
+        msg.style.display = 'block';
+        return false;
+      }
+      list.push(email);
+      localStorage.setItem('e-donos-subs', JSON.stringify(list));
+
+      input.value = '';
+      msg.textContent = 'Dziękujemy! Sprawdź skrzynkę e-mail.';
+      msg.style.display = 'block';
+
+      // you can replace this part with a fetch() POST to your backend endpoint
+      // fetch('/api/subscribe', {method:'POST', body: JSON.stringify({email})})
+      return false;
+    }
+  </script>
+</body>
+</html>
